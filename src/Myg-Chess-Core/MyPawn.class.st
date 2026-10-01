@@ -8,12 +8,19 @@ Class {
 { #category : 'as yet unclassified' }
 MyPawn >> captureSquares [
 
-    | diagonals |
+    | firstLeft firstRight diagonals |
+	
+	 firstLeft := self isWhite
+        ifTrue: [ square up ]
+        ifFalse: [ square down ].
 
-    diagonals := self isWhite
-        ifTrue: [ { square up left. square up right } ]
-        ifFalse: [ { square down left. square down right } ].
+    firstRight := firstLeft.
 
+	 diagonals := {
+        firstLeft ifNotNil: [ firstLeft left ].
+        firstRight ifNotNil: [ firstRight right ]
+    }.
+    
     ^ diagonals select: [ :s |
         s notNil and: [
             s hasPiece and: [
