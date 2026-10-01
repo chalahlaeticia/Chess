@@ -23,6 +23,21 @@ MyPawnTest >> testPawnCannotMoveTwoSquaresIfBlocked [
 ]
 
 { #category : 'tests' }
+MyPawnTest >> testWhitePawnCanCaptureDiagonally [
+
+    | board pawn squares |
+
+    board := MyChessBoard empty.
+    board at: 'e4' put: (pawn := MyPawn white).
+    board at: 'f5' put: MyPawn black.
+
+    squares := pawn targetSquares.
+
+    self assert: (squares includes: (board at: 'f5')).
+
+]
+
+{ #category : 'tests' }
 MyPawnTest >> testWhitePawnCanMoveTwoSquares [
 
     | pawn squares board |

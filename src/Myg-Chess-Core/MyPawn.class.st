@@ -5,6 +5,21 @@ Class {
 	#package : 'Myg-Chess-Core'
 }
 
+{ #category : 'as yet unclassified' }
+MyPawn >> captureSquares [
+
+    | diagonals |
+
+    diagonals := self isWhite
+        ifTrue: [ { square up left. square up right } ]
+        ifFalse: [ { square down left. square down right } ].
+
+    ^ diagonals select: [ :s |
+        s notNil and: [
+            s hasPiece and: [
+                s contents color ~= color ] ] ]
+]
+
 { #category : 'accessing' }
 MyPawn >> id [
 
@@ -32,7 +47,7 @@ MyPawn >> targetSquaresLegal: aBoolean [
 			ifFalse:[ first down ]].
 		
 
-	^ (self isWhite
+	^ ((self isWhite
 		   ifTrue: [ square name last = $2
 							ifTrue: [{ first. second } ]
 							ifFalse: [ { first  } ]]
@@ -45,5 +60,8 @@ MyPawn >> targetSquaresLegal: aBoolean [
         s hasPiece not and: [
             s = second
                 ifTrue: [ first hasPiece not ]
-                ifFalse: [ true ] ] ] ]
+                ifFalse: [ true ] ] ] ])
+		, self captureSquares
+	 
+
 ]
