@@ -6,6 +6,17 @@ Class {
 }
 
 { #category : 'tests' }
+MyPawnTest >> testPawnAtBoardEdgeDoesNotCrash [
+
+    | board pawn |
+
+    board := MyChessBoard empty.
+    board at: 'h8' put: (pawn := MyPawn white).
+
+    self shouldnt: [ pawn targetSquares ] raise: Error
+]
+
+{ #category : 'tests' }
 MyPawnTest >> testPawnCannotMoveTwoSquaresIfBlocked [
 
     | board pawn squares |
