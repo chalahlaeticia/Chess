@@ -201,15 +201,9 @@ MyChessSquare >> printOn: aStream [
 { #category : 'rendering' }
 MyChessSquare >> renderBishop: aPiece [
 
-	^ aPiece isWhite
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'B' ]
-				  ifTrue: [ 'b' ] ]
-		  ifFalse: [
-			  color isBlack
-				  ifFalse: [ 'V' ]
-				  ifTrue: [ 'v' ] ]
+    ^ self
+        renderPiece: aPiece
+        withLetters: #('B' 'b' 'V' 'v')
 ]
 
 { #category : 'rendering' }
@@ -251,6 +245,21 @@ MyChessSquare >> renderPawn: aPiece [
 			  color isBlack
 				  ifFalse: [ 'P' ]
 				  ifTrue: [ 'p' ] ]
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderPiece: aPiece withLetters: letters [
+
+    | index |
+
+    index := {
+        true -> { false -> 1. true -> 2 } asDictionary.
+        false -> { false -> 3. true -> 4 } asDictionary
+    } asDictionary.
+
+    ^ letters at:
+        ((index at: aPiece isWhite)
+            at: color isBlack)
 ]
 
 { #category : 'rendering' }
