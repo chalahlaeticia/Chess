@@ -27,6 +27,24 @@ MyRookTests >> testMoves [
 ]
 
 { #category : 'tests' }
+MyRookTests >> testMovesFromCornerStayInsideBoard [
+
+    | board rook squares expectedSquares |
+
+    board := MyChessBoard empty.
+    board at: 'a1' put: (rook := MyRook white).
+
+    squares := rook targetSquares.
+
+    expectedSquares :=
+        #(a2 a3 a4 a5 a6 a7 a8 b1 c1 d1 e1 f1 g1 h1)
+            collect: [ :squareName | board at: squareName ].
+
+    self assert: squares size equals: 14.
+    self assertCollection: squares includesAll: expectedSquares
+]
+
+{ #category : 'tests' }
 MyRookTests >> testMovesWithOponentObstacle [
 
 	| bishop squares board |
@@ -56,7 +74,7 @@ MyRookTests >> testMovesWithSameColorObstacle [
 	"Rooks don't jump above pieces"
 	"And they don't eat pieces of the same color either"
 	"Let's put a white obstacle on g4, blocking the f rank"
-	board at: 'g4' put: MyRook black.
+	board at: 'g4' put: MyRook white .
 
 	squares := bishop targetSquares.
 	self
