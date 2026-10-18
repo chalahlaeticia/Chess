@@ -188,33 +188,40 @@ MyChessBoard >> initializePieces [
 { #category : 'initialization' }
 MyChessBoard >> initializeSquares [
 
-	| black |
-	black := false.
-	$a asciiValue to: $h asciiValue do: [ :column |
-		8 to: 1 by: -1 do: [ :file |
-			| squareNotation square |
-			squareNotation := column asCharacter asString , file asString.
-			square := black
-				          ifTrue: [
-					          black := false.
-					          MyChessSquare basicNew
-						          color: Color black;
-						          board: self;
-						          initialize;
-						          contents: nil;
-						          yourself ]
-				          ifFalse: [
-					          black := true.
-					          MyChessSquare basicNew
-						          color: Color white;
-						          board: self;
-						          initialize;
-						          contents: nil;
-						          yourself ].
-			square name: squareNotation.
-			grid at: squareNotation put: square.
-			self addChild: square ].
-		black := black not ]
+    | black |
+
+    black := false.
+
+    $a asciiValue to: $h asciiValue do: [ :column |
+        8 to: 1 by: -1 do: [ :file |
+            | squareNotation square |
+
+            squareNotation :=
+                column asCharacter asString , file asString.
+
+            square := black
+                ifTrue: [
+                    black := false.
+                    MyChessSquare basicNew
+                        color: Color black;
+                        board: self;
+                        initialize;
+                        emptyContents;
+                        yourself ]
+                ifFalse: [
+                    black := true.
+                    MyChessSquare basicNew
+                        color: Color white;
+                        board: self;
+                        initialize;
+                        emptyContents;
+                        yourself ].
+
+            square name: squareNotation.
+            grid at: squareNotation put: square.
+            self addChild: square ].
+
+        black := black not ]
 ]
 
 { #category : 'accessing' }
