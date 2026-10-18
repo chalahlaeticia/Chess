@@ -177,6 +177,12 @@ MyChessSquare >> initialize [
 ]
 
 { #category : 'testing' }
+MyChessSquare >> isCaptureTarget [
+
+    ^ self hasPiece
+]
+
+{ #category : 'testing' }
 MyChessSquare >> isInsideBoard [
 
     ^ true

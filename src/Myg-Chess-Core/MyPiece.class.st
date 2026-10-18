@@ -128,6 +128,12 @@ MyPiece >> id [
 ]
 
 { #category : 'testing' }
+MyPiece >> isCaptureTarget [
+
+    ^ false
+]
+
+{ #category : 'testing' }
 MyPiece >> isKing [
 	
 	^ false

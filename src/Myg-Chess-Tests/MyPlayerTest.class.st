@@ -6,6 +6,24 @@ Class {
 }
 
 { #category : 'tests' }
+MyPlayerTest >> testCaptureStrategyChoosesCapture [
+
+    | board rook pawn target strategy |
+
+    board := MyChessBoard empty.
+    rook := MyRook white.
+    pawn := MyPawn black.
+
+    board at: 'a2' put: rook.
+    board at: 'a3' put: pawn.
+
+    strategy := MyCaptureStrategy new.
+    target := strategy chooseFrom: rook legalTargetSquares.
+
+    self assert: target equals: (board at: 'a3')
+]
+
+{ #category : 'tests' }
 MyPlayerTest >> testFirstStrategyChoosesFirstElement [
 
     | choices result |
