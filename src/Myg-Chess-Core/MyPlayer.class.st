@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'color',
-		'game'
+		'game',
+		'strategy'
 	],
 	#category : 'Myg-Chess-Core',
 	#package : 'Myg-Chess-Core'
@@ -39,6 +40,13 @@ MyPlayer >> game: anObject [
 	game := anObject
 ]
 
+{ #category : 'initialization' }
+MyPlayer >> initialize [
+
+    super initialize.
+    strategy := MyRandomStrategy new
+]
+
 { #category : 'testing' }
 MyPlayer >> isWhite [
 	
@@ -54,7 +62,7 @@ MyPlayer >> king [
 { #category : 'accessing' }
 MyPlayer >> pieces [
 
-	^ game pieces select: [ :p | p notNil and: [ p color = self color ] ]
+	^ game pieces select: [ :p | p isPiece and: [ p color = self color ] ]
 ]
 
 { #category : 'playing' }
@@ -68,14 +76,26 @@ MyPlayer >> play [
 
 	[ pieces notEmpty ] whileTrue: [
 		| piece legalMoves |
-		piece := pieces atRandom.
+		piece := strategy chooseFrom: pieces.
 		pieces remove: piece.
 		legalMoves := piece legalTargetSquares.
 		legalMoves ifNotEmpty: [
-			game move: piece to: legalMoves atRandom.
+			game move: piece to: (strategy chooseFrom: legalMoves).
 			^ self ] ].
 
 	self halt: 'NO MOVES AVAILABLE!'
+]
+
+{ #category : 'accessing' }
+MyPlayer >> strategy [
+
+    ^ strategy
+]
+
+{ #category : 'accessing' }
+MyPlayer >> strategy: aStrategy [
+
+    strategy := aStrategy
 ]
 
 { #category : 'constants' }
